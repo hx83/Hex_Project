@@ -1,0 +1,294 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using Vectrosity;
+public class Test : MonoBehaviour 
+{
+    private Color color;
+    private Transform mapContainer;
+
+    private int minXIndex = 99999999;
+	private int minYIndex = 99999999;
+	private int maxXIndex = 0;
+	private int maxYIndex = 0;
+	void Start () 
+    {
+        color = new Color(156/255F, 255/255f, 137/255f);
+        //color = new Color(1, 1, 0);
+
+        mapContainer = this.transform;
+        MapManager.CreateMap(100, 100, mapContainer);
+
+        Button btn = GameObject.Find("Button").GetComponent<Button>();
+        btn.onClick.AddListener(click);
+	}
+
+    private void  click()
+    {
+        FillGrid();
+    }
+
+	
+	// Update is called once per frame
+	void Update () 
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            FillGrid();
+        }
+        if(true)
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //Debug.Log(pos);
+        
+	        int xindex = (int)Mathf.Floor((pos.x - mapContainer.localPosition.x)/(1.5f*GridConst.Radius));
+		    int yindex = (int)Mathf.Floor((pos.y - mapContainer.localPosition.y)/(GridConst.Height*2f));
+            //Debug.Log(xindex + " " +yindex);
+            //
+            List<MapGrid> arr = this.FindAround(xindex,yindex);
+		    foreach(var mc in arr)
+		    {
+			    float ox = pos.x - mc.transform.position.x;
+			    float oy = pos.y - mc.transform.position.y;
+			    //trace(mc.index ,ox,oy);
+
+			    if(ox*ox + oy*oy < GridConst.Radius*GridConst.Radius)
+			    {
+				    mc.Selected = true;
+                    mc.PrevFill(this.color);
+
+                    
+				    if(mc.xIndex < this.minXIndex)
+				    {
+					    this.minXIndex = mc.xIndex;
+				    }
+				    if(mc.xIndex > this.maxXIndex)
+				    {
+					    this.maxXIndex = mc.xIndex;
+				    }
+				    if(mc.yIndex < this.minYIndex)
+				    {
+					    this.minYIndex =  mc.yIndex;
+				    }
+				    if(mc.yIndex > this.maxYIndex)
+				    {
+					    this.maxYIndex = mc.yIndex;
+				    }
+			    }
+		    }
+        }
+	}
+
+
+    private List<MapGrid> FindAround(int xindex,int yindex)
+	{
+		int[] xarr = new int[]{1,1,0,-1,-1,-1,0,1};
+		int[] yarr = new int[]{0,1,1,1,0,-1,-1,-1};
+			
+		List<MapGrid> list = new List<MapGrid>();
+
+		MapGrid mc = MapManager.GetGrid(xindex,yindex);
+
+        
+
+		if(mc != null)
+		{
+			list.Add(mc);
+				
+			for(int i = 0; i< xarr.Length; i++)
+			{
+				int ox = xindex + xarr[i];
+				int oy = yindex + yarr[i];
+
+                MapGrid temp = MapManager.GetGrid(ox, oy);
+				if(temp != null)
+				{
+                    list.Add(temp);
+				}
+			}
+		}
+			
+		return list;
+	}
+
+    //
+    //
+    // 填充
+    //
+
+
+
+    
+    List<MapGrid> allGridList = new List<MapGrid>();
+    private void FillGrid()
+    {
+        allGridList.Clear();
+        float t = Time.realtimeSinceStartup;
+				
+		for(int i = minXIndex; i <= this.maxXIndex; i++)
+		{
+			for(int j = this.minYIndex -1 ; j <= this.maxYIndex +1; j++)
+			{
+                MapGrid temp = MapManager.GetGrid(i,j);
+				if(temp != null)
+				{
+                    allGridList.Add(temp);
+				}
+			}
+		}
+		//
+        foreach (var mc in allGridList)
+		{
+			if(this.IsInArea(mc))
+			{
+				//mc.Selected = true;
+                mc.Fill(color);
+			}
+		}
+        Debug.Log((Time.realtimeSinceStartup - t)*1000);
+
+        minXIndex = 99999999;
+        minYIndex = 99999999;
+        maxXIndex = 0;
+        maxYIndex = 0;
+    }
+
+    private bool IsInArea(MapGrid mc)
+	{
+		if(mc == null)
+			return false;
+			
+		if(mc.Selected == true)
+		{
+			return true;
+		}
+			
+		if(this.IsMinYOK(mc)&& this.IsMaxYOK(mc) && this.IsMinXOK(mc) && this.IsMaxXOK(mc))
+		{
+			return true;
+		}
+			
+		else
+		{
+			return false;
+		}
+	}
+		
+	private bool IsMinYOK(MapGrid mc)
+	{
+			
+		bool mark = false;//用来记录是否连续边界，是就忽略
+		uint count = 0;
+			
+		for(int i = this.minYIndex; i < mc.yIndex; i++)
+		{
+            MapGrid temp = MapManager.GetGrid(mc.xIndex,i);
+			if(temp != null)
+			{
+				if(temp.Selected == true)
+				{
+					if(mark == false)
+					{
+						mark = true;
+						count++;
+					}
+				}
+				else
+				{
+					mark = false;
+				}
+			}
+		}
+			
+		if(count > 1) count += (count-1);			
+		return count%2 != 0;
+	}
+	private bool IsMaxYOK(MapGrid mc)
+	{
+		bool mark = false;//用来记录是否连续边界，是就忽略
+		uint count = 0;
+			
+		for(int i = mc.yIndex; i <= this.maxYIndex; i++)
+		{
+            MapGrid temp = MapManager.GetGrid(mc.xIndex,i);
+			if(temp != null)
+			{
+				if(temp.Selected == true)
+				{
+					if(mark == false)
+					{
+						mark = true;
+						count++;
+					}
+				}
+				else
+				{
+					mark = false;
+				}
+			}
+		}
+			
+		if(count > 1) count += (count-1);
+		return count%2 != 0;
+	}
+		
+		
+		
+	private bool IsMinXOK(MapGrid mc)
+	{
+		bool mark = false;//用来记录是否连续边界，是就忽略
+		uint count = 0;
+			
+		for(int i = this.minXIndex; i < mc.xIndex; i++)
+		{
+            MapGrid temp = MapManager.GetGrid(i,mc.yIndex);
+			if(temp != null)
+			{
+				if(temp.Selected == true)
+				{
+					if(mark == false)
+					{
+						mark = true;
+						count++;
+					}
+				}
+				else
+				{
+					mark = false;
+				}
+			}
+		}
+			
+		if(count > 1) count += (count-1);
+		return count%2 != 0;
+	}
+	private bool IsMaxXOK(MapGrid mc)
+	{
+		bool mark = false;//用来记录是否连续边界，是就忽略
+		uint count = 0;
+			
+		for(int i = mc.xIndex; i <= this.maxXIndex; i++)
+		{
+            MapGrid temp = MapManager.GetGrid(i, mc.yIndex);
+			if(temp != null)
+			{
+				if(temp.Selected == true)
+				{
+					if(mark == false)
+					{
+						mark = true;
+						count++;
+					}
+				}
+				else
+				{
+					mark = false;
+				}
+			}
+		}
+			
+		if(count > 1) count += (count-1);
+		return count%2 != 0;
+	}
+}

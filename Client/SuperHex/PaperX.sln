@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperX.CSharp.Plugins", "PaperX.CSharp.Plugins.csproj", "{38393C9F-BD39-530D-53E0-5F64C3409C14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperX.CSharp", "PaperX.CSharp.csproj", "{D251B484-EAED-E546-0883-A9CA1A3AB49D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaperX.CSharp.Editor", "PaperX.CSharp.Editor.csproj", "{BCC03B0D-BD04-1CB3-E8FC-95D1FEA847FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38393C9F-BD39-530D-53E0-5F64C3409C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38393C9F-BD39-530D-53E0-5F64C3409C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38393C9F-BD39-530D-53E0-5F64C3409C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38393C9F-BD39-530D-53E0-5F64C3409C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D251B484-EAED-E546-0883-A9CA1A3AB49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D251B484-EAED-E546-0883-A9CA1A3AB49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D251B484-EAED-E546-0883-A9CA1A3AB49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D251B484-EAED-E546-0883-A9CA1A3AB49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCC03B0D-BD04-1CB3-E8FC-95D1FEA847FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCC03B0D-BD04-1CB3-E8FC-95D1FEA847FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCC03B0D-BD04-1CB3-E8FC-95D1FEA847FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCC03B0D-BD04-1CB3-E8FC-95D1FEA847FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
