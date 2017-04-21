@@ -40,13 +40,20 @@ public class MapGrid : MonoBehaviour {
             {
                 return;
             }
-            _owner = value;
+            //
             if(value == null)
             {
+                _owner = value;
                 this.Reset();
             }
             else
             {
+                if(value != _owner)
+                {
+                    if(_owner != null)
+                        _owner.RemoveGrid(this);
+                }
+                _owner = value;
                 this._state = GridState.OWN;
                 this.Fill(value.Color);
             }

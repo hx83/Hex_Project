@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class MainEntry : MonoBehaviour 
 {   
@@ -7,6 +8,7 @@ public class MainEntry : MonoBehaviour
 
     private MainStage stage;
 
+    private static System.Action _nextFrameCall;
     public static MainEntry Instance;
 	void Start () 
     {
@@ -37,9 +39,33 @@ public class MainEntry : MonoBehaviour
         PlayerManager.Update();
 
         stage.Update();
+
+        if (_nextFrameCall != null)
+        {
+            //_nextFrameCall.Invoke();
+            Delegate[] list = _nextFrameCall.GetInvocationList();
+            if (list != null)
+            {
+                int count = list.Length;
+                for (int i = 0; i < count; i++)
+                {
+                    System.Action function = (System.Action)list[i];
+                    _nextFrameCall -= function;
+                    function.Invoke();
+                }
+                //_nextFrameCall = null;
+            }
+        }
 	}
     void FixedUpdate()
     {
         
+    }
+
+
+    public static void RunInNextFrame(System.Action function)
+    {
+        if (function != null)
+            _nextFrameCall += function;
     }
 }

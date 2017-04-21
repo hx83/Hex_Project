@@ -9,7 +9,7 @@ public class Player : EventDispatcher
     private GameObject obj;
     private uint _id;
     private uint _skinID;
-    private uint _score;
+    //private uint _score;
     private Color _color;
     protected float _speed = 3f;
     protected Vector3 _direction;
@@ -94,16 +94,7 @@ public class Player : EventDispatcher
         }
     }
 
-    /// <summary>
-    /// 游戏积分
-    /// </summary>
-    public uint Score
-    {
-        get
-        {
-            return _score;
-        }
-    }
+    
 
 
     public BornPoint BornPoint
@@ -128,6 +119,21 @@ public class Player : EventDispatcher
             mineList.Add(grid);
     }
 
+    public void RemoveGrid(MapGrid grid)
+    {
+        if (mineList.IndexOf(grid) != -1)
+            mineList.Remove(grid);
+    }
+    /// <summary>
+    /// 计算分数
+    /// </summary>
+    public int Score
+    {
+        get
+        {
+            return mineList.Count;
+        }
+    }
     public void Update()
     {
         if(this.IsDie == true)
@@ -175,8 +181,8 @@ public class Player : EventDispatcher
     /// <summary>
     /// 分数改变时广播事件
     /// </summary>
-    private void ChangeScore()
-    {
+    //private void ChangeScore()
+    //{
         
-    }
+    //}
 }
