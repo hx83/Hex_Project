@@ -15,6 +15,8 @@ public class MainStage : EventDispatcher
         MapManager.CreateMap(100, 80, LayerManager.mapLayer);
 
         ModuleManager.Show(ModuleType.MAIN_PANEL);
+
+        CameraManager.MoveTo(new Vector3(34,34));
     }
     public void Start()
     {

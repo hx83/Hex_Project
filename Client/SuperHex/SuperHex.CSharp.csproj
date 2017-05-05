@@ -107,6 +107,7 @@
     <Compile Include="Assets\Scripts\Common\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Events\PlayerEvent.cs" />
     <Compile Include="Assets\Scripts\Global.cs" />
+    <Compile Include="Assets\Scripts\GlobalBehavior.cs" />
     <Compile Include="Assets\Scripts\Input\ControlArea.cs" />
     <Compile Include="Assets\Scripts\Input\HRYJoyStick.cs" />
     <Compile Include="Assets\Scripts\MainEntry.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Assets\Scripts\Net\SocketExtend.cs" />
     <Compile Include="Assets\Scripts\Net\SocketManager.cs" />
     <Compile Include="Assets\Scripts\Net\TeamSocketManager.cs" />
+    <Compile Include="Assets\Scripts\NetTest\NetManager.cs" />
     <Compile Include="Assets\Scripts\Player\Behavior\CheckGrid.cs" />
     <Compile Include="Assets\Scripts\Player\Behavior\DrawLine.cs" />
     <Compile Include="Assets\Scripts\Player\HeroPlayer.cs" />

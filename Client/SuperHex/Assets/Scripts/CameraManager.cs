@@ -27,4 +27,10 @@ public class CameraManager
     {
         target = trans;
     }
+
+    public static void MoveTo(Vector3 p)
+    {
+        Vector3 p2 = new Vector3(p.x, p.y, pos.z);
+        camera.transform.position = p2;
+    }
 }

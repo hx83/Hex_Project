@@ -569,7 +569,7 @@ public class SocketExtend
 
     public void DispatchEvent(String type)
     {
-        MainEntry.RunInNextFrame(() =>
+        GlobalBehavior.RunInNextFrame(() =>
         {
             _eventDispatcher.DispatchEvent(type);
         });

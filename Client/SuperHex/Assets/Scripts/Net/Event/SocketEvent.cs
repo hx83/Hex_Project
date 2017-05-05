@@ -75,7 +75,7 @@ public class SocketEvent:ISyncExcute
     {
         if (!HasType || !HasBody())
         {
-            MainEntry.RunInNextFrame(OnExcuteOver);
+            GlobalBehavior.RunInNextFrame(OnExcuteOver);
             return;
         }
         MemoryStream stream = new MemoryStream();
@@ -83,7 +83,7 @@ public class SocketEvent:ISyncExcute
         stream.Position = 0;
         _instance = RuntimeTypeModel.Default.Deserialize(stream, null, _type);
         stream.Dispose();
-        MainEntry.RunInNextFrame(OnExcuteOver);
+        GlobalBehavior.RunInNextFrame(OnExcuteOver);
     }
 
     private void OnExcuteOver()
