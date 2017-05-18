@@ -5,6 +5,8 @@ public class HeroPlayer : Player
 {
     //private MouseJoyStick joystick;
     private HRYJoyStick _joystick;
+
+    
    	public HeroPlayer():base()
     {
         //this.joystick = this.transform.gameObject.AddComponent<MouseJoyStick>();

@@ -102,6 +102,17 @@
     <Compile Include="Assets\LineWaves\LineWave.cs" />
     <Compile Include="Assets\Main.cs" />
     <Compile Include="Assets\NewBehaviourScript.cs" />
+    <Compile Include="Assets\Scripts\AI\AIManager.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\CreateRoute.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\Ext\PlayerAIExt.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\IsCanCreateRoute.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\IsCreateRoute.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\IsDangerous.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\MoveToPoint.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\RandomDir.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\RobotBTree.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\SelectMyNearestGrid.cs" />
+    <Compile Include="Assets\Scripts\AI\Custom\SelectSafeDir.cs" />
     <Compile Include="Assets\Scripts\CameraManager.cs" />
     <Compile Include="Assets\Scripts\Common\AtlasType.cs" />
     <Compile Include="Assets\Scripts\Common\ResourceManager.cs" />
@@ -344,6 +355,7 @@
     <Compile Include="Assets\Scripts\Utils\StringUtil.cs" />
     <Compile Include="Assets\Scripts\Utils\UIFocus.cs" />
     <Compile Include="Assets\Scripts\Utils\UIUtil.cs" />
+    <Compile Include="Assets\Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\CodeStage\AdvancedFPSCounter\API.txt" />

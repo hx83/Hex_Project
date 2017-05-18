@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Behavior3CSharp.Core;
 
 public class Player : EventDispatcher
 {
@@ -14,13 +15,19 @@ public class Player : EventDispatcher
     protected float _speed = 3f;
     protected Vector3 _direction;
     //
-    protected bool _isDie = false;
+    protected bool _isDie = true;
     //
-    //line
-    
     private CheckGrid checkGrid;
+    //
+    protected RobotBTree tree;
+    //
+    private Vector3 targetV;
+    private float lerpTime = 2;
+
 	public Player()
     {
+        tree = AIManager.GetTree(this);
+
         mineList = new List<MapGrid>();
 
         GameObject go = Resources.Load<GameObject>(AssetPathUtil.GetPlayerPath(0));
@@ -32,9 +39,24 @@ public class Player : EventDispatcher
         Color = new Color(156 / 255F, 255 / 255f, 137 / 255f);
 
         checkGrid = new CheckGrid(this);
+
+        //_direction = new Vector3(-0.3f, -1, 0).normalized;
+    }
+    public CheckGrid CheckGridAction
+    {
+        get
+        {
+            return checkGrid;
+        }
     }
 
-    
+    public Vector3 Direction
+    {
+        get
+        {
+            return this._direction;
+        }
+    }
 
     public Transform transform
     {
@@ -107,6 +129,8 @@ public class Player : EventDispatcher
                 item.Owner = this;
                 this.AddMineGrid(item);
             }
+
+            this._isDie = false;
         }
     }
     /// <summary>
@@ -124,6 +148,13 @@ public class Player : EventDispatcher
         if (mineList.IndexOf(grid) != -1)
             mineList.Remove(grid);
     }
+    public List<MapGrid> MyGrids
+    {
+        get
+        {
+            return mineList;
+        }
+    }
     /// <summary>
     /// 计算分数
     /// </summary>
@@ -140,6 +171,12 @@ public class Player : EventDispatcher
         {
             return;
         }
+        //AI
+        tree.Tick();
+        //
+
+        _direction = Vector3.Lerp(_direction, targetV, Time.deltaTime / lerpTime).normalized;
+        //
         this.transform.localPosition += Time.deltaTime * _speed * _direction;
         if(MapManager.IsOutMap(this))
         {
@@ -148,15 +185,26 @@ public class Player : EventDispatcher
         }
 
         checkGrid.Update();
+
     }
     /// <summary>
     /// 往某个方向移动
     /// </summary>
     /// <param name="vector"></param>
     public void Move(Vector3 vector)
-    {
-        _direction = vector;
+    {   
+        _direction = vector.normalized;
     }
+    /// <summary>
+    /// 平滑转到某个方向,主要给机器人用
+    /// </summary>
+    /// <param name="vector"></param>
+    public void MoveLerp(Vector3 vector,float time = 2)
+    {
+        lerpTime = time;
+        targetV = vector;
+    }
+
     private void FillMyGrid(List<MapGrid> list)
     {
 
@@ -179,10 +227,23 @@ public class Player : EventDispatcher
         this._isDie = false;
     }
     /// <summary>
-    /// 分数改变时广播事件
+    /// 玩家是否已经接近边界了
     /// </summary>
-    //private void ChangeScore()
-    //{
-        
-    //}
+    /// <returns></returns>
+    public bool IsNearSide
+    {
+        get
+        {
+            return MapManager.IsNearSide(this);
+        }
+    }    
+
+
+    public bool IsCreateRoute
+    {
+        set
+        {
+            tree.ai.IsCreateRoute = false;
+        }
+    }
 }

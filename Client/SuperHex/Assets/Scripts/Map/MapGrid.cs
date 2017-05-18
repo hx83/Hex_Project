@@ -14,6 +14,8 @@ public class MapGrid : MonoBehaviour {
     private Color orColor;
     private Player _owner;
     private Player _prevOwner;
+
+    public Vector3 Center;
     /// <summary>
     /// 格子状态，空的，已被占用，被预占用
     /// </summary>
@@ -152,7 +154,10 @@ public class MapGrid : MonoBehaviour {
     }
 
     private bool isFill;
-
+    public void Test()
+    {
+        mainSp.color = Color.red;
+    }
     public void Fill(Color c)
     {
         mainSp.color = orColor;

@@ -1,0 +1,361 @@
+{
+  "id": "54fd3d77-a51b-4d78-930c-347df0277c8b",
+  "title": "A behavior tree",
+  "description": "",
+  "root": "4a731516-9363-4725-b219-ffa8eddd6a36",
+  "properties": {},
+  "nodes": {
+    "4a731516-9363-4725-b219-ffa8eddd6a36": {
+      "id": "4a731516-9363-4725-b219-ffa8eddd6a36",
+      "name": "Priority",
+      "title": "Priority",
+      "description": "攻击还是发展",
+      "properties": {},
+      "display": {
+        "x": -576,
+        "y": -228
+      },
+      "children": [
+        "fa76217a-5ec5-4372-8d13-2e075bc99b54"
+      ]
+    },
+    "7fe0ce5f-143d-40d4-8604-7f413bbb745a": {
+      "id": "7fe0ce5f-143d-40d4-8604-7f413bbb745a",
+      "name": "Inverter",
+      "title": "Inverter",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -96,
+        "y": -204
+      },
+      "child": "ab9f6979-df6c-441e-a592-5e52b7e9bda7"
+    },
+    "9f2c4fe8-63d8-4e7e-8219-cfe9ef994b6a": {
+      "id": "9f2c4fe8-63d8-4e7e-8219-cfe9ef994b6a",
+      "name": "Sequence",
+      "title": "Sequence",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -240,
+        "y": -156
+      },
+      "children": [
+        "7fe0ce5f-143d-40d4-8604-7f413bbb745a",
+        "0ebba91a-0c25-43b4-8bcb-9da4f365e200"
+      ]
+    },
+    "178f34a0-66be-4ecf-808b-47998752bf45": {
+      "id": "178f34a0-66be-4ecf-808b-47998752bf45",
+      "name": "Priority",
+      "title": "Priority",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -96,
+        "y": 180
+      },
+      "children": [
+        "e8d3fa34-4101-4c4b-8a6d-94e52aa0941b",
+        "80ddbbf9-b844-40f5-8e27-97c2a61c76b0",
+        "95d9be73-aa61-44c6-98f5-0b71b747e42c",
+        "a6731f7c-f97a-4b10-8d9b-e956a84d226e"
+      ]
+    },
+    "fa76217a-5ec5-4372-8d13-2e075bc99b54": {
+      "id": "fa76217a-5ec5-4372-8d13-2e075bc99b54",
+      "name": "Priority",
+      "title": "Priority",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -444,
+        "y": -108
+      },
+      "children": [
+        "5ff5d1d4-fff3-4ca4-8281-94216eadd5e6",
+        "9f2c4fe8-63d8-4e7e-8219-cfe9ef994b6a",
+        "5cd4b294-fdf6-4527-8cf2-0e26dbc8e058"
+      ]
+    },
+    "a6731f7c-f97a-4b10-8d9b-e956a84d226e": {
+      "id": "a6731f7c-f97a-4b10-8d9b-e956a84d226e",
+      "name": "SelectMyNearestGrid",
+      "title": "SelectMyNearestGrid",
+      "description": "寻找最近的格子，并设置方向",
+      "properties": {},
+      "display": {
+        "x": 132,
+        "y": 252
+      }
+    },
+    "ab9f6979-df6c-441e-a592-5e52b7e9bda7": {
+      "id": "ab9f6979-df6c-441e-a592-5e52b7e9bda7",
+      "name": "IsCreateRoute",
+      "title": "IsCreateRoute",
+      "description": "是否规则了要走的路线",
+      "properties": {},
+      "display": {
+        "x": 72,
+        "y": -204
+      }
+    },
+    "a165ed11-61fa-46e3-8c4f-389f5618b97a": {
+      "id": "a165ed11-61fa-46e3-8c4f-389f5618b97a",
+      "name": "CreateRoute",
+      "title": "CreateRoute",
+      "description": "规划一条路线，创建成功则不进入下一个节点，否则玩家重新选个方向看能不能创建路线",
+      "properties": {},
+      "display": {
+        "x": 420,
+        "y": -96
+      }
+    },
+    "e8d3fa34-4101-4c4b-8a6d-94e52aa0941b": {
+      "id": "e8d3fa34-4101-4c4b-8a6d-94e52aa0941b",
+      "name": "MoveToPoint",
+      "title": "MoveToPoint",
+      "description": "移动到规划好的路线上的某个点",
+      "properties": {
+        "index": 1
+      },
+      "display": {
+        "x": 120,
+        "y": 108
+      }
+    },
+    "80ddbbf9-b844-40f5-8e27-97c2a61c76b0": {
+      "id": "80ddbbf9-b844-40f5-8e27-97c2a61c76b0",
+      "name": "MoveToPoint",
+      "title": "MoveToPoint",
+      "description": "移动到规划好的路线上的某个点",
+      "properties": {
+        "index": 2
+      },
+      "display": {
+        "x": 120,
+        "y": 156
+      }
+    },
+    "95d9be73-aa61-44c6-98f5-0b71b747e42c": {
+      "id": "95d9be73-aa61-44c6-98f5-0b71b747e42c",
+      "name": "MoveToPoint",
+      "title": "MoveToPoint",
+      "description": "移动到规划好的路线上的某个点",
+      "properties": {
+        "index": 3
+      },
+      "display": {
+        "x": 120,
+        "y": 204
+      }
+    },
+    "4855c805-6b8d-4f4c-9cc6-ffc45d112a33": {
+      "id": "4855c805-6b8d-4f4c-9cc6-ffc45d112a33",
+      "name": "Sequence",
+      "title": "Sequence",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": 48,
+        "y": -96
+      },
+      "children": [
+        "c5afaa3c-5bc6-49e8-9b7c-3991811a6784",
+        "4a5105c5-2f97-4797-a7fd-7c6244a1cfd1",
+        "3ed32ab2-a217-4a13-8955-2c2bd281c3f5"
+      ]
+    },
+    "c5afaa3c-5bc6-49e8-9b7c-3991811a6784": {
+      "id": "c5afaa3c-5bc6-49e8-9b7c-3991811a6784",
+      "name": "IsCanCreateRoute",
+      "title": "IsCanCreateRoute",
+      "description": "是否满足可创建路线的条件",
+      "properties": {},
+      "display": {
+        "x": 228,
+        "y": -156
+      }
+    },
+    "4a5105c5-2f97-4797-a7fd-7c6244a1cfd1": {
+      "id": "4a5105c5-2f97-4797-a7fd-7c6244a1cfd1",
+      "name": "Inverter",
+      "title": "Inverter",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": 228,
+        "y": -96
+      },
+      "child": "a165ed11-61fa-46e3-8c4f-389f5618b97a"
+    },
+    "3ed32ab2-a217-4a13-8955-2c2bd281c3f5": {
+      "id": "3ed32ab2-a217-4a13-8955-2c2bd281c3f5",
+      "name": "RandomDir",
+      "title": "RandomDir",
+      "description": "随机找一个方向走，创建路线失败的时候用",
+      "properties": {},
+      "display": {
+        "x": 228,
+        "y": -36
+      }
+    },
+    "5cd4b294-fdf6-4527-8cf2-0e26dbc8e058": {
+      "id": "5cd4b294-fdf6-4527-8cf2-0e26dbc8e058",
+      "name": "Sequence",
+      "title": "Sequence",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -240,
+        "y": 144
+      },
+      "children": [
+        "860fe902-da89-441d-8448-93e73fe0de44",
+        "178f34a0-66be-4ecf-808b-47998752bf45"
+      ]
+    },
+    "860fe902-da89-441d-8448-93e73fe0de44": {
+      "id": "860fe902-da89-441d-8448-93e73fe0de44",
+      "name": "IsCreateRoute",
+      "title": "IsCreateRoute",
+      "description": "是否规则了要走的路线",
+      "properties": {},
+      "display": {
+        "x": -48,
+        "y": 72
+      }
+    },
+    "972d9dc0-f3fc-4ef6-8670-2e2e3e107d16": {
+      "id": "972d9dc0-f3fc-4ef6-8670-2e2e3e107d16",
+      "name": "RandomDir",
+      "title": "RandomDir",
+      "description": "随机找一个方向走，创建路线失败的时候用",
+      "properties": {},
+      "display": {
+        "x": 132,
+        "y": 24
+      }
+    },
+    "0ebba91a-0c25-43b4-8bcb-9da4f365e200": {
+      "id": "0ebba91a-0c25-43b4-8bcb-9da4f365e200",
+      "name": "Priority",
+      "title": "Priority",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -108,
+        "y": -96
+      },
+      "children": [
+        "4855c805-6b8d-4f4c-9cc6-ffc45d112a33",
+        "972d9dc0-f3fc-4ef6-8670-2e2e3e107d16"
+      ]
+    },
+    "38d4fd26-1f12-4912-85e8-c3f25e81df28": {
+      "id": "38d4fd26-1f12-4912-85e8-c3f25e81df28",
+      "name": "IsDangerous",
+      "title": "IsDangerous",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -48,
+        "y": -384
+      }
+    },
+    "5ff5d1d4-fff3-4ca4-8281-94216eadd5e6": {
+      "id": "5ff5d1d4-fff3-4ca4-8281-94216eadd5e6",
+      "name": "Sequence",
+      "title": "Sequence",
+      "description": "",
+      "properties": {},
+      "display": {
+        "x": -204,
+        "y": -348
+      },
+      "children": [
+        "38d4fd26-1f12-4912-85e8-c3f25e81df28",
+        "a153f061-59ea-4f1f-9f39-6b3aadf7424a"
+      ]
+    },
+    "a153f061-59ea-4f1f-9f39-6b3aadf7424a": {
+      "id": "a153f061-59ea-4f1f-9f39-6b3aadf7424a",
+      "name": "SelectSafeDir",
+      "title": "SelectSafeDir",
+      "description": "当遇到危险时，选择一个安全方向",
+      "properties": {},
+      "display": {
+        "x": -48,
+        "y": -312
+      }
+    }
+  },
+  "display": {
+    "camera_x": 916.0200000000186,
+    "camera_y": 533.5,
+    "camera_z": 0.75,
+    "x": -672,
+    "y": -228
+  },
+  "custom_nodes": [
+    {
+      "name": "SelectMyNearestGrid",
+      "category": "action",
+      "title": "SelectMyNearestGrid",
+      "description": "寻找最近的格子，并设置方向",
+      "properties": {}
+    },
+    {
+      "name": "IsCreateRoute",
+      "category": "condition",
+      "title": "IsCreateRoute",
+      "description": "是否规则了要走的路线",
+      "properties": {}
+    },
+    {
+      "name": "CreateRoute",
+      "category": "action",
+      "title": "CreateRoute",
+      "description": "规划一条路线",
+      "properties": {}
+    },
+    {
+      "name": "MoveToPoint",
+      "category": "action",
+      "title": "MoveToPoint",
+      "description": "移动到规划好的路线上的某个点",
+      "properties": {
+        "index": 0
+      }
+    },
+    {
+      "name": "IsCanCreateRoute",
+      "category": "condition",
+      "title": "IsCanCreateRoute",
+      "description": "是否满足可创建路线的条件",
+      "properties": {}
+    },
+    {
+      "name": "RandomDir",
+      "category": "action",
+      "title": "RandomDir",
+      "description": "随机找一个方向走",
+      "properties": {}
+    },
+    {
+      "name": "IsDangerous",
+      "category": "condition",
+      "title": "IsDangerous",
+      "description": null,
+      "properties": {}
+    },
+    {
+      "name": "SelectSafeDir",
+      "category": "action",
+      "title": "SelectSafeDir",
+      "description": "当遇到危险时，选择一个安全方向",
+      "properties": {}
+    }
+  ]
+}

@@ -10,13 +10,17 @@ public class MapManager
     //public static Transform LineContainer;
     private static Transform Map;
 
+    public static int maxXindex;
+    public static int maxYindex;
 
     private static float MapWidth;
     private static float MapHeight;
-    public static void CreateMap(uint w, uint h, Transform parent)
+    public static void CreateMap(int w, int h, Transform parent)
     {
-        //LineContainer = GameObject.Find("LineContainer").transform;
         Map = parent;
+
+        maxXindex = w - 1;
+        maxYindex = h -1;
 
         if(dict == null)
         {
@@ -54,6 +58,7 @@ public class MapManager
                 MapGrid grid = go.AddComponent<MapGrid>();
                 grid.xIndex = xIndex;
                 grid.yIndex = yIndex;
+                grid.Center = new Vector2(x, y);
 
                 dict.Add(xIndex * N + yIndex, grid);
                 allList.Add(grid);
@@ -83,7 +88,11 @@ public class MapManager
         b.transform.localPosition = new Vector3(W / 2 - GridConst.Radius * 1.5f,H - GridConst.Height, -1);
         b.transform.SetParent(parent, false);
     }
-
+    /// <summary>
+    /// 是否在地图外
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
     public static bool IsOutMap(Player p)
     {
         Vector3 pos = p.transform.localPosition;
@@ -111,6 +120,40 @@ public class MapManager
         {
             return null;
         }
+    }
+
+    private static MapGrid GetGridByPixel(float x, float y)
+    {
+        Vector2 op = new Vector2(x,y);
+
+        int xindex = (int)Mathf.Floor(x / (1.5f * GridConst.Radius));
+        int yindex = (int)Mathf.Floor(y / (GridConst.Height * 2f));
+
+        List<MapGrid> list = FindAround(xindex, yindex);
+        if (list.Count == 0)
+        {
+            return null;
+        }
+        else
+        {
+            float n = 9999;
+            MapGrid grid = null;
+            foreach (var item in list)
+            {
+                float m = Vector2.Distance(item.Center,op);
+                if (m < n)
+                {
+                    n = m;
+                    grid = item;
+                }
+            }
+            return grid;
+        }
+    }
+
+    public static MapGrid GetGridByPos(Vector3 pos)
+    {
+        return GetGridByPixel(pos.x, pos.y);
     }
 
     public static List<MapGrid> FindAround(int xindex, int yindex)
@@ -143,7 +186,10 @@ public class MapManager
 
         return list;
     }
-
+    /// <summary>
+    /// 随机出生点
+    /// </summary>
+    /// <returns></returns>
     public static BornPoint GetRandomBornPoint()
     {
         int n = allList.Count;
@@ -156,6 +202,10 @@ public class MapManager
             grid = allList[m];
             tempList = FindConnected6(grid);
         }
+
+
+        //grid = MapManager.GetGrid(4, 15);
+        //tempList = FindConnected6(grid);
 
         BornPoint bp = new BornPoint();
         tempList.Add(grid);
@@ -199,6 +249,45 @@ public class MapManager
             list.Add(g);
 
         return list;
+    }
+
+    /// <summary>
+    /// 玩家是否接近地图边界
+    /// </summary>
+    /// <param name="p"></param>
+    /// <returns></returns>
+    public static bool IsNearSide(Player p)
+    {
+        MapGrid grid = GetGridByPos(p.transform.localPosition);
+
+        if (grid == null)
+            return true;
+
+        if(grid.xIndex <= 1 || grid.xIndex >= maxXindex - 1 || grid.yIndex <= 1 || grid.yIndex >= maxYindex - 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool IsNearSideByPos(Vector3 pos)
+    {
+        MapGrid grid = GetGridByPos(pos);
+
+        if (grid == null)
+            return true;
+
+        if (grid.xIndex <= 1 || grid.xIndex >= maxXindex - 1 || grid.yIndex <= 1 || grid.yIndex >= maxYindex - 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 

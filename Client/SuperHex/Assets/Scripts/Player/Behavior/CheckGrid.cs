@@ -24,6 +24,8 @@ public class CheckGrid
     private MapGrid prevGrid;
 
     private bool isBegin;
+
+    public MapGrid StartGrid;
     public CheckGrid(Player p)
     {
         this.player = p;
@@ -35,7 +37,13 @@ public class CheckGrid
         isBegin = false;
     }
 
-    
+    public bool IsBegin
+    {
+        get
+        {
+            return isBegin;
+        }
+    }
 
     public void Update()
     {
@@ -47,9 +55,88 @@ public class CheckGrid
         int yindex = (int)Mathf.Floor(pos.y / (GridConst.Height * 2f));
 
 
-        //if (isBegin == false)
-        //    return;
+
+        MapGrid cGrid = MapManager.GetGridByPos(pos);
+        //cGrid.Test();
+        //return;
+        if (cGrid != null)
+        {
+            if (cGrid.Owner != this.player)
+            {
+                if (cGrid.State == GridState.PREV_OWN)
+                {
+                    if (cGrid.PrevOwner == this.player)
+                    {
+                        float t = this.timeDict[cGrid];
+                        if (Time.realtimeSinceStartup - t > 1)
+                        {
+                            //撞到自己了
+                            PlayerManager.HitPlayer(this.player, this.player);
+                        }
+
+                    }
+                    else
+                    {
+                        PlayerManager.HitPlayer(this.player, cGrid.PrevOwner);
+                    }
+                }
+                else
+                {
+                    if (this.timeDict.ContainsKey(cGrid) == false)
+                        this.timeDict.Add(cGrid, Time.realtimeSinceStartup);
+                    //
+                    if (!isBegin)
+                    {
+                        StartGrid = cGrid;
+                        StartGrid.Test();
+                        isBegin = true;
+                        Line.CanDraw = true;
+                    }
+                }
+            }
+            else
+            {
+                if (isBegin)
+                {
+                    isBegin = false;
+                    this.FillGrid();
+                }
+            }
+        }
+
         //
+        //
+        MapGrid mc = cGrid;
+        if (mc.Owner != this.player)
+        {
+            mc.PrevOwner = this.player;
+
+            if (this.timeDict.ContainsKey(mc) == false)
+            {
+                this.timeDict.Add(mc, Time.realtimeSinceStartup);
+            }
+        }
+
+        if (mc.xIndex < this.minXIndex)
+        {
+            this.minXIndex = mc.xIndex;
+        }
+        if (mc.xIndex > this.maxXIndex)
+        {
+            this.maxXIndex = mc.xIndex;
+        }
+        if (mc.yIndex < this.minYIndex)
+        {
+            this.minYIndex = mc.yIndex;
+        }
+        if (mc.yIndex > this.maxYIndex)
+        {
+            this.maxYIndex = mc.yIndex;
+        }
+        
+       
+        //
+        /**
         List<MapGrid> arr = MapManager.FindAround(xindex, yindex);
         foreach (var mc in arr)
         {
@@ -61,6 +148,7 @@ public class CheckGrid
                 //mc.Selected = true;
                 if (mc.Owner != this.player)
                 {
+                    Debug.Log("AAA");
                     mc.PrevOwner = this.player;
 
                     if (this.timeDict.ContainsKey(mc) == false)
@@ -87,54 +175,13 @@ public class CheckGrid
                 }
             }
         }
+         * */
 
 
 
 
 
-        MapGrid cGrid = MapManager.GetGrid(xindex, yindex);
-        if(cGrid != null)
-        {
-            if (cGrid.Owner != this.player)
-            {
-                if (cGrid.State == GridState.PREV_OWN)
-                {
-                    if(cGrid.PrevOwner == this.player)
-                    {
-                        float t = this.timeDict[cGrid];
-                        if(Time.realtimeSinceStartup - t > 1)
-                        {
-                            //撞到自己了
-                            PlayerManager.HitPlayer(this.player, this.player);
-                        }
-                        
-                    }
-                    else
-                    {
-                        PlayerManager.HitPlayer(this.player, cGrid.PrevOwner);
-                    }                        
-                }
-                else
-                {
-                    if (this.timeDict.ContainsKey(cGrid) == false)
-                        this.timeDict.Add(cGrid, Time.realtimeSinceStartup);
-                    //
-                    if (!isBegin)
-                    {
-                        isBegin = true;
-                        Line.CanDraw = true;
-                    }
-                }
-            }
-            else
-            {
-                if(isBegin)
-                {
-                    isBegin = false;
-                    this.FillGrid();
-                }
-            }
-        }
+        
         //
         //
         Line.Update();
@@ -149,6 +196,8 @@ public class CheckGrid
 
         this.timeDict.Clear();
         Line.Clear();
+
+        StartGrid = null;
     }
 
     public void Reset()
@@ -192,7 +241,7 @@ public class CheckGrid
             }
         }
         //Debug.Log((Time.realtimeSinceStartup - t) * 1000);
-
+        this.player.IsCreateRoute = false;
         this.Clear();
     }
 

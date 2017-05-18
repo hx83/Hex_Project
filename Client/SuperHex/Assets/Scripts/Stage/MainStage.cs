@@ -20,6 +20,9 @@ public class MainStage : EventDispatcher
     }
     public void Start()
     {
+        Vector3 v = new Vector3(1, 0, 0);
+        Vector3 v2 = Quaternion.AngleAxis(45, new Vector3(0, 0, 1))*v;
+
         if (isStart == false)
         {
             Hero = PlayerManager.CreateHero();

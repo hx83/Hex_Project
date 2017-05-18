@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Behavior3CSharp;
+using AI;
 
 public class MainEntry : MonoBehaviour 
 {   
@@ -12,6 +14,7 @@ public class MainEntry : MonoBehaviour
     public static MainEntry Instance;
 	void Start () 
     {
+        Application.runInBackground = true;
         Application.targetFrameRate = 60;
         Instance = this.gameObject.GetComponent<MainEntry>();
 
@@ -21,7 +24,20 @@ public class MainEntry : MonoBehaviour
         PlayerManager.Setup();
         //相机
         CameraManager.Setup(GameObject.Find("Main Camera").transform);
-        
+        //
+
+
+        B3Config.Register("CreateRoute", typeof(CreateRoute));
+        B3Config.Register("IsCanCreateRoute", typeof(IsCanCreateRoute));
+        B3Config.Register("IsCreateRoute", typeof(IsCreateRoute));
+        B3Config.Register("MoveToPoint", typeof(MoveToPoint));
+        B3Config.Register("RandomDir", typeof(RandomDir));
+        B3Config.Register("SelectMyNearestGrid", typeof(SelectMyNearestGrid));
+        B3Config.Register("IsDangerous", typeof(IsDangerous));
+        B3Config.Register("SelectSafeDir", typeof(SelectSafeDir));
+
+        AIManager.Setup();
+        //
 
         stage = new MainStage();
         stage.Init();

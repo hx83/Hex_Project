@@ -122,6 +122,7 @@ public class PlayerManager
 
     public static void HitPlayer(Player Attacker,Player Defender)
     {
+        return;
         Debug.Log("hit player");
         if(Attacker == Defender)
         {
